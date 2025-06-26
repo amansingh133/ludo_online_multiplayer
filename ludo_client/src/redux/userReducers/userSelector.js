@@ -1,0 +1,9 @@
+export const selectUsers = (state) => state.user.users;
+export const selectUser = (state) => state.user.user;
+export const selectSocket = (state) => state.user.socket;
+export const selectConnected = (state) => state.user.connected;
+export const selectPlotData = (state) => state.user.plotData;
+export const selectColors = (state) => state.user.colors;
+export const selectUserConnection = (state) => state.user.connected;
+export const selectUserStatus = (state) => state.user.userStatus;
+export const selectGameId = (state) => state.user.gameId;

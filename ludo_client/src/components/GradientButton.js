@@ -1,0 +1,109 @@
+import React from "react";
+import {
+  TouchableOpacity,
+  Text,
+  StyleSheet,
+  View,
+  Platform,
+} from "react-native";
+import {
+  PlayPauseIcon,
+  PlayCircleIcon,
+  ComputerDesktopIcon,
+  UsersIcon,
+  HomeIcon,
+} from "react-native-heroicons/solid";
+import { LinearGradient } from "expo-linear-gradient";
+import { RFValue } from "react-native-responsive-fontsize";
+import { playSound } from "../utils/SoundUtilityExpo";
+
+const iconSize = RFValue(20);
+
+const GradientButton = ({ title, onPress, iconColor = "#d5be3e" }) => {
+  return (
+    <View
+      style={{
+        borderRadius: 10,
+        borderWidth: 2,
+        borderColor: "#000",
+        marginVertical: 10,
+      }}
+    >
+      <TouchableOpacity
+        activeOpacity={0.8}
+        onPress={() => {
+          playSound("ui");
+          onPress();
+        }}
+        style={styles.btnContainer}
+      >
+        <LinearGradient
+          colors={["#4c669f", "#3b5998", "#192f6a"]}
+          style={styles.button}
+          start={{ x: 0, y: 0 }}
+          end={{ x: 0, y: 1 }}
+        >
+          {title == "RESUME" ? (
+            <PlayPauseIcon size={iconSize} color={iconColor} />
+          ) : title == "NEW GAME" || "CONTINUE" ? (
+            <PlayCircleIcon size={iconSize} color={iconColor} />
+          ) : title == "VS CPU" ? (
+            <ComputerDesktopIcon size={iconSize} color={iconColor} />
+          ) : title == "HOME" ? (
+            <HomeIcon size={iconSize} color={iconColor} />
+          ) : (
+            <UsersIcon size={iconSize} color={iconColor} />
+          )}
+          <Text style={styles.buttonText}>{title}</Text>
+        </LinearGradient>
+      </TouchableOpacity>
+    </View>
+  );
+};
+
+const styles = StyleSheet.create({
+  btnContainer: {
+    borderWidth: 2,
+    borderRadius: 10,
+    elevation: 5,
+    backgroundColor: "white",
+    borderColor: "#d5be3e",
+    width: 240,
+    // shadowColor: "#d5be3e",
+    // shadowOpacity: 0.5,
+    // shadowOffset: { width: 1, height: 1 },
+    // shadowRadius: 10,
+    ...Platform.select({
+      web: {
+        boxShadow: "1px 1px 10px rgba(213, 190, 62, 0.5)",
+      },
+      default: {
+        elevation: 5,
+        shadowColor: "#d5be3e",
+        shadowOpacity: 0.5,
+        shadowOffset: { width: 1, height: 1 },
+        shadowRadius: 10,
+      },
+    }),
+  },
+  button: {
+    paddingHorizontal: 20,
+    paddingVertical: 10,
+    borderRadius: 5,
+    borderWidth: 2,
+    borderColor: "#000",
+    flexDirection: "row",
+    alignItems: "center",
+    justifyContent: "center",
+    gap: 20,
+  },
+  buttonText: {
+    color: "white",
+    fontSize: RFValue(16),
+    width: "70%",
+    textAlign: "left",
+    fontFamily: "Philosopher-Bold",
+  },
+});
+
+export default GradientButton;
